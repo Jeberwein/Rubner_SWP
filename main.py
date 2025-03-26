@@ -1,17 +1,16 @@
 import random
-import matplotlib.pyplot as plt
-
-statsNumbs = {i: 0 for i in range(1, 46)}
+statsNumbs = {i: 0 for i in range(1, 44)}
 
 
-def lotto():
+def lotto(obereGrenze, durchFuehrungen):
     pulledNumbs = []
-    allNumbs = [i for i in range(1, 46)]
-    for i in range(6):
-        randomNumb = random.randint(0, 44 - i)
+
+    allNumbs = [i for i in range(1, obereGrenze)]
+    for i in range(durchFuehrungen):
+        randomNumb = random.randint(0, obereGrenze - i)
         pulledNumb = allNumbs[randomNumb]
-        lastNumb = allNumbs[44 - i]
-        allNumbs[44 - i] = pulledNumb
+        lastNumb = allNumbs[obereGrenze  - i]
+        allNumbs[obereGrenze - i] = pulledNumb
         allNumbs[randomNumb] = lastNumb
         pulledNumbs.append(pulledNumb)
 
@@ -19,9 +18,9 @@ def lotto():
     return pulledNumbs
 
 
-def ziehungen(anzahl=1000):
+def ziehungen(anzahl):
     for _ in range(anzahl):
-        pulledNumbs = lotto()
+        pulledNumbs = lotto(44,6)
         Stats(pulledNumbs)
 
 
@@ -29,9 +28,12 @@ def Stats(pulledNumbs):
     for i in pulledNumbs:
         statsNumbs[i] += 1
 
+def test():
+    pass
 
 if __name__ == "__main__":
-    ziehungen()
+    ziehungen(1000000)
+    kak()
     keys = list(statsNumbs.keys())
     values = list(statsNumbs.values())
     plt.bar(keys, values)
